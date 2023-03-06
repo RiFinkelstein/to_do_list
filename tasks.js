@@ -45,6 +45,9 @@ function deleteTask() {
     // Get the parent li element
     var li = this.parentNode;
 
-    // Remove the li element from the list
-    taskList.removeChild(li);
+    // Display a confirmation dialog before deleting the task
+    if (confirm("Are you sure you want to delete this task?")) {
+        // Remove the li element from the list
+        taskList.removeChild(li);
+    }
 }
