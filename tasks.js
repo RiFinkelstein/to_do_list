@@ -51,3 +51,31 @@ function deleteTask() {
         taskList.removeChild(li);
     }
 }
+
+function searchTasks() {
+    // Get the search query
+    var query = searchInput.value.toLowerCase();
+
+    // Loop through all the list items
+    for (var i = 0; i < taskList.children.length; i++) {
+        var li = taskList.children[i];
+
+        // Check if the task matches the search query
+        if (li.textContent.toLowerCase().includes(query)) {
+            li.style.display = "";
+        } else {
+            li.style.display = "none";
+        }
+    }
+
+    // Show all the list items if the search bar is empty
+    if (query === "") {
+        for (var i = 0; i < taskList.children.length; i++) {
+            var li = taskList.children[i];
+            li.style.display = "";
+        }
+    }
+}
+
+document.getElementById("addButton").addEventListener("click", addTask);
+searchInput.addEventListener("input", searchTasks);
