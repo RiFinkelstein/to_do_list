@@ -1,28 +1,36 @@
 // JavaScript code
 var taskList = document.getElementById("taskList");
 var taskInput = document.getElementById("taskInput");
+var form = document.getElementById("taskForm");
+var error = document.getElementById("error");
 
 function addTask() {
-    // Create a new list item
-    var li = document.createElement("li");
-    var taskText = document.createTextNode(taskInput.value);
-    li.appendChild(taskText);
+    if (taskInput.value === "") {
+        alert("Please enter a task.");
+    }
+    else {
+        // Create a new list item
+        var li = document.createElement("li");
+        var taskText = document.createTextNode(taskInput.value);
+        li.appendChild(taskText);
 
-    // Create a checkbox for the completed task
-    var checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.onclick = completeTask;
-    li.appendChild(checkbox);
+        // Create a checkbox for the completed task
+        var checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.onclick = completeTask;
+        li.appendChild(checkbox);
 
-    // Create a button to delete the task
-    var deleteButton = document.createElement("button");
-    var deleteText = document.createTextNode("Delete");
-    deleteButton.appendChild(deleteText);
-    deleteButton.onclick = deleteTask;
-    li.appendChild(deleteButton);
+        // Create a button to delete the task
+        var deleteButton = document.createElement("button");
+        var deleteText = document.createTextNode("Delete");
+        deleteButton.appendChild(deleteText);
+        deleteButton.onclick = deleteTask;
+        li.appendChild(deleteButton);
 
-    taskList.appendChild(li);
-    taskInput.value = "";
+        taskList.appendChild(li);
+        taskInput.value = "";
+        error.textContent = ""
+    }
 }
 
 function completeTask() {
