@@ -3,12 +3,23 @@ var taskList = document.getElementById("taskList");
 var taskInput = document.getElementById("taskInput");
 var form = document.getElementById("taskForm");
 var error = document.getElementById("error");
+var sortSelect = document.getElementById("sortSelect");
+var searchInput = document.getElementById("searchInput");
+
+var tasks = [];
 
 function addTask() {
     if (taskInput.value === "") {
         alert("Please enter a task.");
     }
     else {
+        var task = {
+            name: taskInput.value,
+            priority: 0,
+            date: null
+        };
+
+
         // Create a new list item
         var li = document.createElement("li");
         var taskText = document.createTextNode(taskInput.value);
@@ -27,9 +38,9 @@ function addTask() {
         deleteButton.onclick = deleteTask;
         li.appendChild(deleteButton);
 
-        taskList.appendChild(li);
-        taskInput.value = "";
-        error.textContent = ""
+        //taskList.appendChild(li);
+        //taskInput.value = "";
+        //error.textContent = ""
 
         //create a button to edit task
         var editButton = document.createElement("button");
@@ -37,6 +48,15 @@ function addTask() {
         editButton.appendChild(editText);
         editButton.onclick = editTask;
         li.appendChild(editButton);
+
+        taskList.appendChild(li);
+
+        tasks.push(task);
+
+        taskInput.value = "";
+        error.textContent = "";
+
+        sortTasks();
     }
 }
 
