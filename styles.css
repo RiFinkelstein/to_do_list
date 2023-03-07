@@ -1,10 +1,9 @@
-/* CSS styles */
 body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
 }
 
-div {
+.container {
     margin: 0 auto;
     width: 80%;
     max-width: 800px;
@@ -31,6 +30,7 @@ button {
     color: #fff;
     border: none;
     cursor: pointer;
+    margin-left: 10px;
 }
 
 button:hover {
@@ -46,6 +46,9 @@ ul {
 li {
     padding: 10px;
     border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 li:last-child {
@@ -55,4 +58,85 @@ li:last-child {
 .completed {
     text-decoration: line-through;
     color: #999;
+}
+
+.edit-icon {
+    font-size: 20px;
+    color: #ccc;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.delete-icon {
+    font-size: 20px;
+    color: #f44336;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.edit-icon:hover,
+.delete-icon:hover {
+    color: #333;
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* CSS styles for devices with a width up to 600px */
+@media (max-width: 600px) {
+    div {
+        width: 100%;
+        padding: 10px;
+    }
+
+    input[type="text"] {
+        width: 60%;
+    }
+}
+
+/* CSS styles for devices with a width between 600px and 900px */
+@media (min-width: 600px) and (max-width: 900px) {
+    div {
+        width: 90%;
+    }
+}
+
+/* CSS styles for devices with a width greater than 900px */
+@media (min-width: 900px) {
+    div {
+        width: 80%;
+    }
 }

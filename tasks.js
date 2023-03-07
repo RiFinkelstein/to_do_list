@@ -30,6 +30,13 @@ function addTask() {
         taskList.appendChild(li);
         taskInput.value = "";
         error.textContent = ""
+
+        //create a button to edit task
+        var editButton = document.createElement("button");
+        var editText = document.createTextNode("Edit");
+        editButton.appendChild(editText);
+        editButton.onclick = editTask;
+        li.appendChild(editButton);
     }
 }
 
@@ -51,7 +58,48 @@ function deleteTask() {
         taskList.removeChild(li);
     }
 }
+function editTask() {
+    // Get the parent li element
+    var li = this.parentNode;
 
+    // Get the task text
+    var taskText = li.childNodes[0].nodeValue;
+
+    // Create an input element for editing the task
+    var editInput = document.createElement("input");
+    editInput.type = "text";
+    editInput.value = taskText;
+
+    // Replace the task text with the input element
+    li.replaceChild(editInput, li.childNodes[0]);
+
+    // Change the edit button text to "Save"
+    this.childNodes[0].nodeValue = "Save";
+
+    // Change the edit button onclick function to saveTask
+    this.onclick = saveTask;
+}
+
+function saveTask() {
+    // Get the parent li element
+    var li = this.parentNode;
+
+    // Get the input element with the edited task
+    var editInput = li.childNodes[0];
+
+    // Get the edited task text
+    var editedTaskText = editInput.value;
+
+    // Replace the input element with the new task text
+    var newTaskText = document.createTextNode(editedTaskText);
+    li.replaceChild(newTaskText, editInput);
+
+    // Change the edit button text back to "Edit"
+    this.childNodes[0].nodeValue = "Edit";
+
+    // Change the edit button onclick function back to editTask
+    this.onclick = editTask;
+}
 function searchTasks() {
     // Get the search query
     var query = searchInput.value.toLowerCase();
