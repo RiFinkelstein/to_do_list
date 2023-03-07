@@ -12,52 +12,53 @@ function addTask() {
     if (taskInput.value === "") {
         alert("Please enter a task.");
     }
-    else {
-        var task = {
-            name: taskInput.value,
-            priority: 0,
-            date: null
-        };
+    // Prompt the user for task priority
+    var priority = prompt("Enter task priority on a scale of 1-10:");
 
-
-        // Create a new list item
-        var li = document.createElement("li");
-        var taskText = document.createTextNode(taskInput.value);
-        li.appendChild(taskText);
-
-        // Create a checkbox for the completed task
-        var checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.onclick = completeTask;
-        li.appendChild(checkbox);
-
-        // Create a button to delete the task
-        var deleteButton = document.createElement("button");
-        var deleteText = document.createTextNode("Delete");
-        deleteButton.appendChild(deleteText);
-        deleteButton.onclick = deleteTask;
-        li.appendChild(deleteButton);
-
-        //taskList.appendChild(li);
-        //taskInput.value = "";
-        //error.textContent = ""
-
-        //create a button to edit task
-        var editButton = document.createElement("button");
-        var editText = document.createTextNode("Edit");
-        editButton.appendChild(editText);
-        editButton.onclick = editTask;
-        li.appendChild(editButton);
-
-        taskList.appendChild(li);
-
-        tasks.push(task);
-
-        taskInput.value = "";
-        error.textContent = "";
-
-        sortTasks();
+    // Check if the priority is a number between 1 and 10
+    if (isNaN(priority) || priority < 1 || priority > 10) {
+        alert("Please enter a number between 1 and 10.");
+        return;
     }
+
+
+    // Create a new list item
+    var li = document.createElement("li");
+    var taskText = document.createTextNode(taskInput.value);
+    li.appendChild(taskText);
+
+    // Create a checkbox for the completed task
+    var checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.onclick = completeTask;
+    li.appendChild(checkbox);
+
+    // Create a button to delete the task
+    var deleteButton = document.createElement("button");
+    var deleteText = document.createTextNode("Delete");
+    deleteButton.appendChild(deleteText);
+    deleteButton.onclick = deleteTask;
+    li.appendChild(deleteButton);
+
+    //taskList.appendChild(li);
+    //taskInput.value = "";
+    //error.textContent = ""
+
+    //create a button to edit task
+    var editButton = document.createElement("button");
+    var editText = document.createTextNode("Edit");
+    editButton.appendChild(editText);
+    editButton.onclick = editTask;
+    li.appendChild(editButton);
+
+    taskList.appendChild(li);
+
+    tasks.push(li);
+
+    taskInput.value = "";
+    error.textContent = "";
+
+    sortTasks();
 }
 
 function completeTask() {
