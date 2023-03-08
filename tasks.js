@@ -12,8 +12,9 @@ function addTask() {
     if (taskInput.value === "") {
         alert("Please enter a task.");
     }
-    // Prompt the user for task priority
-    var priority = prompt("Enter task priority on a scale of 1-10:");
+    // Get the selected priority value
+    var prioritySelect = document.getElementById("prioritySelect");
+    var priority = prioritySelect.value;
 
     // Check if the priority is a number between 1 and 10
     if (isNaN(priority) || priority < 1 || priority > 10) {
