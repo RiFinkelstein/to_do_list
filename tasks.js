@@ -3,25 +3,15 @@ var taskList = document.getElementById("taskList");
 var taskInput = document.getElementById("taskInput");
 var form = document.getElementById("taskForm");
 var error = document.getElementById("error");
-var sortSelect = document.getElementById("sortSelect");
-var searchInput = document.getElementById("searchInput");
+
 
 var tasks = [];
+
 
 function addTask() {
     if (taskInput.value === "") {
         alert("Please enter a task.");
     }
-    // Get the selected priority value
-    var prioritySelect = document.getElementById("prioritySelect");
-    var priority = prioritySelect.value;
-
-    // Check if the priority is a number between 1 and 10
-    if (isNaN(priority) || priority < 1 || priority > 10) {
-        alert("Please enter a number between 1 and 10.");
-        return;
-    }
-
 
     // Create a new list item
     var li = document.createElement("li");
@@ -34,17 +24,6 @@ function addTask() {
     checkbox.onclick = completeTask;
     li.appendChild(checkbox);
 
-    // Create a button to delete the task
-    var deleteButton = document.createElement("button");
-    var deleteText = document.createTextNode("Delete");
-    deleteButton.appendChild(deleteText);
-    deleteButton.onclick = deleteTask;
-    li.appendChild(deleteButton);
-
-    //taskList.appendChild(li);
-    //taskInput.value = "";
-    //error.textContent = ""
-
     //create a button to edit task
     var editButton = document.createElement("button");
     var editText = document.createTextNode("Edit");
@@ -52,15 +31,38 @@ function addTask() {
     editButton.onclick = editTask;
     li.appendChild(editButton);
 
+    // Create a button to delete the task
+    var deleteButton = document.createElement("button");
+    var deleteText = document.createTextNode("Delete");
+    deleteButton.appendChild(deleteText);
+    deleteButton.onclick = deleteTask;
+    li.appendChild(deleteButton);
+
+
     taskList.appendChild(li);
 
+    // Add the new task to the tasks array
     tasks.push(li);
+
+    // Remove the deleted task from the tasks array
+    var index = tasks.indexOf(li);
+    if (index > -1) {
+        tasks.splice(index, 1);
+    }
+
 
     taskInput.value = "";
     error.textContent = "";
 
-    sortTasks();
+
+    ;
 }
+
+form.addEventListener("submit", function (event) {
+    event.preventDefault(); // prevent the form from submitting
+    addTask();
+});
+
 
 function completeTask() {
     // Get the parent li element
@@ -76,10 +78,17 @@ function deleteTask() {
 
     // Display a confirmation dialog before deleting the task
     if (confirm("Are you sure you want to delete this task?")) {
-        // Remove the li element from the list
+        // Remove the task from the task list
         taskList.removeChild(li);
+
+        // Remove the task from the tasks array
+        var index = tasks.indexOf(li);
+        if (index > -1) {
+            tasks.splice(index, 1);
+        }
     }
 }
+
 function editTask() {
     // Get the parent li element
     var li = this.parentNode;
@@ -147,5 +156,31 @@ function searchTasks() {
     }
 }
 
-document.getElementById("addButton").addEventListener("click", addTask);
+function sortTasks() {
+    var sortOption = sortSelect.value;
+
+    switch (sortOption) {
+        case "priority-asc":
+            tasks.sort(function (a, b) {
+                return a.childNodes[1].value - b.childNodes[1].value;
+            });
+            break;
+        case "priority-desc":
+            tasks.sort(function (a, b) {
+                return b.childNodes[1].value - a.childNodes[1].value;
+            });
+            break;
+    }
+
+    while (taskList.firstChild) {
+        taskList.removeChild(taskList.firstChild);
+    }
+
+    for (var i = 0; i < tasks.length; i++) {
+        taskList.appendChild(tasks[i]);
+    }
+}
+
 searchInput.addEventListener("input", searchTasks);
+var addButton = document.getElementById("addButton");
+addButton.addEventListener("click", addTask);
