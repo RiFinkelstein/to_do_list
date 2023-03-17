@@ -8,6 +8,7 @@ var searchInput = document.getElementById("searchInput");
 
 var tasks = [];
 
+
 function addTask() {
     if (taskInput.value === "") {
         alert("Please enter a task.");
@@ -19,10 +20,19 @@ function addTask() {
     };
 
     // Add the new task to the tasks array
-    tasks.push(task);
+    //tasks.push(task);
 
     // Get the priority value
     var priority = priorityInput.value;
+    // Find the index where the new task should be inserted based on its priority
+    // Add the new task to the tasks array in its correct position based on priority
+    var index = tasks.findIndex(t => parseInt(t.priority) < parseInt(task.priority));
+    if (index === -1) {
+        tasks.push(task);
+    } else {
+        tasks.splice(index, 0, task);
+    }
+
 
     // Create a new list item
     var li = document.createElement("li");
@@ -55,6 +65,9 @@ function addTask() {
 
     taskInput.value = "";
     error.textContent = "";
+
+    // Redraw the task list with the updated array
+    drawTaskList();
 }
 
 form.addEventListener("submit", function (event) {
@@ -129,6 +142,9 @@ function saveTask() {
 
     // Change the edit button onclick function back to editTask
     this.onclick = editTask;
+
+    // Redraw the task list with the updated array
+    drawTaskList();
 }
 function searchTasks() {
     // Get the search query
@@ -157,6 +173,46 @@ function searchTasks() {
             li.style.display = "";
         }
     }
+}
+function drawTaskList() {
+    // Clear the current list
+    taskList.innerHTML = "";
+
+    // Sort the tasks array by priority
+    tasks.sort(function (a, b) {
+        return a.priority - b.priority;
+    });
+
+    // Add each task to the list in order
+    tasks.forEach(function (task) {
+        var li = document.createElement("li");
+
+        // Create task text with priority
+        var taskText = document.createTextNode(task.name + " (" + task.priority + ")");
+        li.appendChild(taskText);
+
+        // Create a checkbox for the completed task
+        var checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.onclick = completeTask;
+        li.appendChild(checkbox);
+
+        // Create a button to edit the task
+        var editButton = document.createElement("button");
+        var editText = document.createTextNode("Edit");
+        editButton.appendChild(editText);
+        editButton.onclick = editTask;
+        li.appendChild(editButton);
+
+        // Create a button to delete the task
+        var deleteButton = document.createElement("button");
+        var deleteText = document.createTextNode("Delete");
+        deleteButton.appendChild(deleteText);
+        deleteButton.onclick = deleteTask;
+        li.appendChild(deleteButton);
+
+        taskList.appendChild(li);
+    });
 }
 
 
