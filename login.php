@@ -1,4 +1,5 @@
 <?php
+require 'dbConnect.php';
 session_start();
 
 // Connect to the database
